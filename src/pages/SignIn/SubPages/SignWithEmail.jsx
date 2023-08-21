@@ -15,15 +15,15 @@ import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../../assets/event-circle.svg';
-// import { EmailSignIn } from '../../../redux/features/auth/services';
-// import { dispatch } from '../../../redux/store';
-// import { useSelector } from 'react-redux';
-// import AlertBox from '../../../components/Alert';
-// import { SignInApi } from '../../../redux/axios/apis/auth';
-// import ErrorHandler from '../../../redux/axios/Utils/ErrorHandler';
+import { EmailSignIn } from '../../../redux/features/auth/services';
+import { dispatch } from '../../../redux/store';
+import { useSelector } from 'react-redux';
+import AlertBox from '../../../components/Alert';
+import { SignInApi } from '../../../redux/axios/apis/auth';
+import ErrorHandler from '../../../redux/axios/Utils/ErrorHandler';
 
 const SignInWithEmail = () => {
-  // const { token } = useSelector(state => state.auth);
+  const { token } = useSelector(state => state.auth);
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,26 +42,26 @@ const SignInWithEmail = () => {
     }
   }, [email]);
 
-  // const HandleSubmit = async () => {
-  //   if (emailTest) {
-  //     const formBody = { email, password };
-  //     setLoading(true);
-  //     try {
-  //       const res = await SignInApi(formBody);
-  //       dispatch(EmailSignIn(res.data));
-  //       await setLoading(false)
-  //     } catch (error) {
-  //       setError(ErrorHandler(error));
-  //       setLoading(false)
-  //     }
-  //   }
-  // };
+  const HandleSubmit = async () => {
+    if (emailTest) {
+      const formBody = { email, password };
+      setLoading(true);
+      try {
+        const res = await SignInApi(formBody);
+        dispatch(EmailSignIn(res.data));
+        await setLoading(false)
+      } catch (error) {
+        setError(ErrorHandler(error));
+        setLoading(false)
+      }
+    }
+  };
 
-  // useEffect(() => {
-  //   if (token) {
-  //     navigate('/dashboard');
-  //   }
-  // }, [token, navigate]);
+  useEffect(() => {
+    if (token) {
+      navigate('/dashboard');
+    }
+  }, [token, navigate]);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -234,7 +234,7 @@ const SignInWithEmail = () => {
             fontWeight="500"
             _hover={{ bgColor: '55D4CC' }}
             disabled={!emailTest}
-            // onClick={() => HandleSubmit()}
+            onClick={() => HandleSubmit()}
           >
             {loading ? <Spinner size='md' /> : 'Login'}
           </Button>
